@@ -343,7 +343,7 @@
         </label>
       </div>
           <div class="wave-group">
-        <input type="text" class="input" name="email" required>
+        <input type="text" class="input" name="_replyto" required>
         <span class="bar"></span>
         <label class="label">
           <span class="label-char" style="--index: 0">e</span>
@@ -506,7 +506,7 @@
     const payload = new FormData();
     payload.set("clientName", form.clientName.value);
     payload.set("clientSurname", form.clientSurname.value);
-    payload.set("email", form.email.value);
+    payload.set("_replyto", form._replyto.value);
     payload.set("country", form.country.value);
     payload.set("products",   JSON.stringify(productsData));
     payload.set("_next",      "thank-you.html");
