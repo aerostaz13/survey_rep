@@ -369,6 +369,17 @@
       <tbody></tbody>
     </table>
     <br>
+        <input
+    type="hidden"
+    name="_next"
+    value="https://aerostaz13.github.io/thank-you.html"
+    >
+
+    <input
+    type="hidden"
+    name="_captcha"
+    value="false"
+    >
 
 <button type = "submit">
     <span class="circle1"></span>
@@ -519,8 +530,8 @@
     })
     .then(r => {
         if (r.ok) {
-        alert("Prévisions soumises ! Merci 😊");
-        form.reset();
+        const nextUrl = form.querySelector('input[name="_next"]').value;
+        window.location.href = nextUrl;
         } else {
         return r.json().then(j => { throw new Error(j.error); });
         }
