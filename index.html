@@ -261,6 +261,42 @@
     margin-bottom: 1.5em;
   }
 
+  .monthly-input {
+  display: none;
+  gap: 5px;              /* écart entre chaque mois */
+  flex-wrap: wrap;       /* si espace réduit, passe à la ligne */
+}
+
+.month-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.month-box label {
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.name-row {
+  display: flex;
+  gap: 5px;          /* espace entre Prénom et Name */
+  flex-wrap: wrap;     /* retombe à la ligne si pas assez large */
+  margin-bottom: 1.5rem;
+}
+
+.country-row {
+  display: flex;
+  gap: 5px;          /* espace entre Prénom et Name */
+  flex-wrap: wrap;     /* retombe à la ligne si pas assez large */
+  margin-bottom: 1.5rem;
+  
+}
+
+
+
+
   
 
   </style>
@@ -272,29 +308,53 @@
   </header>
   <form id="survey-form" style="margin-top: 20px;" action="https://formspree.io/f/xwpbokkq" method="POST">
     <p class="form-description" style = "margin: 20px;">Nous mettrons la description ici</p>
-    <div class="wave-group">
-      <input type="text" class="input" name="clientName" required>
-      <span class="bar"></span>
-      <label class="label">
-        <span class="label-char" style="--index: 0">N</span>
-        <span class="label-char" style="--index: 1">a</span>
-        <span class="label-char" style="--index: 2">m</span>
-        <span class="label-char" style="--index: 3">e</span>
-      </label>
+    <div class ="name-row">
+      <div class="wave-group">
+        <input type="text" class="input" name="clientSurname" required>
+        <span class="bar"></span>
+        <label class="label">
+          <span class="label-char" style="--index: 0">P</span>
+          <span class="label-char" style="--index: 1">r</span>
+          <span class="label-char" style="--index: 2">é</span>
+          <span class="label-char" style="--index: 3">n</span>
+          <span class="label-char" style="--index: 4">o</span>
+          <span class="label-char" style="--index: 5">m</span>
+        </label>
+      </div>
+      <div class="wave-group">
+        <input type="text" class="input" name="clientName" required>
+        <span class="bar"></span>
+        <label class="label">
+          <span class="label-char" style="--index: 0">N</span>
+          <span class="label-char" style="--index: 1">o</span>
+          <span class="label-char" style="--index: 2">m</span>
+        </label>
+      </div>
     </div>
-    <div class="wave-group">
-      <input type="text" class="input" name="country" required>
-      <span class="bar"></span>
-      <label class="label">
-        <span class="label-char" style="--index: 0">C</span>
-        <span class="label-char" style="--index: 1">o</span>
-        <span class="label-char" style="--index: 2">u</span>
-        <span class="label-char" style="--index: 3">n</span>
-        <span class="label-char" style="--index: 4">t</span>
-        <span class="label-char" style="--index: 5">r</span>
-        <span class="label-char" style="--index: 6">y</span>
-      </label>
+    <div class = "country-row">
+      <div class="wave-group">
+        <input type="text" class="input" name="country" required>
+        <span class="bar"></span>
+        <label class="label">
+          <span class="label-char" style="--index: 0">P</span>
+          <span class="label-char" style="--index: 1">a</span>
+          <span class="label-char" style="--index: 2">y</span>
+          <span class="label-char" style="--index: 3">s</span>
+        </label>
+      </div>
+          <div class="wave-group">
+        <input type="text" class="input" name="email" required>
+        <span class="bar"></span>
+        <label class="label">
+          <span class="label-char" style="--index: 0">e</span>
+          <span class="label-char" style="--index: 1">m</span>
+          <span class="label-char" style="--index: 2">a</span>
+          <span class="label-char" style="--index: 3">i</span>
+          <span class="label-char" style="--index: 4">l</span>
+        </label>
+      </div>
     </div>
+
 
     <table id="product-table">
       <thead>
@@ -334,6 +394,8 @@
 
     const tbody = document.querySelector("#product-table tbody");
 
+    const monthAbbr = ["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"];
+
     produits.forEach((prod, index) => {
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -346,9 +408,23 @@
         </label>
         </td>
         <td>
-        <div id="monthly_${index}" class="monthly-input">
-            ${[...Array(12)].map((_, m) => `<input type="number" name="m_${index}_${m}" min="0" value="0" style="width: 40px">`).join('')}
-        </div>
+          <div id="monthly_${index}" class="monthly-input">
+            ${
+              monthAbbr.map((abbr, m) => `
+                <div class="month-box">
+                  <label for="m_${index}_${m}">${abbr}</label>
+                  <input
+                    type="number"
+                    id="m_${index}_${m}"
+                    name="m_${index}_${m}"
+                    min="0"
+                    value="0"
+                    style="width: 40px"
+                  >
+                </div>
+              `).join('')
+            }
+          </div>
         </td>
         <td><span id="boxes_${index}">0</span></td>
     `;
@@ -362,7 +438,7 @@
     const quantityPerCarton = parseInt(prod["Quantité par carton"]);
 
     toggle.addEventListener("change", () => {
-        monthlyDiv.style.display = toggle.checked ? "block" : "none";
+        monthlyDiv.style.display = toggle.checked ? "flex" : "none";
         calculateBoxes();
     });
 
@@ -429,9 +505,11 @@
 
     const payload = new FormData();
     payload.set("clientName", form.clientName.value);
-    payload.set("country",    form.country.value);
+    payload.set("clientSurname", form.clientSurname.value);
+    payload.set("email", form.email.value);
+    payload.set("country", form.country.value);
     payload.set("products",   JSON.stringify(productsData));
-    payload.set("_next",      "https://aerostaz13.github.io/thank-you.html");
+    payload.set("_next",      "thank-you.html");
 
     fetch(form.action, {
         method: "POST",
