@@ -520,7 +520,7 @@
     payload.set("_replyto", form._replyto.value);
     payload.set("country", form.country.value);
     payload.set("products",   JSON.stringify(productsData));
-    payload.set("_next",      "thank_you.html");
+    payload.set("_next",      "survey_rep/thank_you.html");
 
     fetch(form.action, {
         method: "POST",
