@@ -30,16 +30,18 @@
     align-items: center;
     margin: 20px;
     position: relative;
+    margin-top: 15px;
   }
   header h1 {
     font-family: 'Inter', sans-serif;
-    font-size: 1.8rem;
+    font-size: 3rem;
     font-weight: 600;
   }
   header img {
     height: 60px;
     object-fit: contain;
-    position: absolute;
+    position: static;
+    margin-left: auto;
     top: 10px;
     right: 50px;
     height: 300px;
@@ -257,8 +259,8 @@
 
   .form-description {
     font-size: 1rem;
-    color: red;
     margin-bottom: 1.5em;
+    margin: 20px;
   }
 
   .monthly-input {
@@ -307,7 +309,14 @@
     <img src="logo_LOBS.png" alt = "Logo LOBS International Health"> 
   </header>
   <form id="survey-form" style="margin-top: 20px;" action="https://formspree.io/f/xwpbokkq" method="POST">
-    <p class="form-description" style = "margin: 20px;">Nous mettrons la description ici</p>
+    <p class="form-description">
+    Chers partenaires,<br>
+    Afin de mieux anticiper vos besoins et garantir la disponibilité de nos produits, merci de renseigner vos prévisions de commandes annuelles. Vous pouvez indiquer un volume global ou, pour les produits à forte saisonnalité, détailler vos besoins mois par mois en cochant la case « Décomposer par mois ».<br><br>
+    Chaque quantité annuelle ou mensuelle se convertit automatiquement en nombre de cartons (colonne de droite). Les valeurs non entières signalent un besoin partiel : n’hésitez pas à ajuster vos prévisions pour obtenir un nombre de cartons entier.<br><br>
+    Toutes les quantités saisies sont exprimées en UNITÉS DE BASE (bolus, flacons, sachets…).<br><br>
+    Une fois tous les champs complétés, cliquez sur <strong>Envoyer</strong> pour nous transmettre vos estimations. Nous vous remercions de votre collaboration et restons à votre disposition pour toute question.
+    </p>
+
     <div class ="name-row">
       <div class="wave-group">
         <input type="text" class="input" name="clientSurname" required>
@@ -330,8 +339,6 @@
           <span class="label-char" style="--index: 2">m</span>
         </label>
       </div>
-    </div>
-    <div class = "country-row">
       <div class="wave-group">
         <input type="text" class="input" name="country" required>
         <span class="bar"></span>
@@ -372,7 +379,7 @@
         <input
     type="hidden"
     name="_next"
-    value="https://aerostaz13.github.io/survey_rep/thank_you.html"
+    value="https://aerostaz13.github.io/thank-you.html"
     >
 
     <input
@@ -387,7 +394,7 @@
     <span class="circle3"></span>
     <span class="circle4"></span>
     <span class="circle5"></span>
-    <span class="text">Submit</span>
+    <span class="text">Envoyer</span>
 </button>
 
  <button type="reset">
@@ -520,7 +527,7 @@
     payload.set("_replyto", form._replyto.value);
     payload.set("country", form.country.value);
     payload.set("products",   JSON.stringify(productsData));
-    payload.set("_next",      "https://aerostaz13.github.io/survey_rep/thank_you.html");
+    payload.set("_next",      "thank_you.html");
 
     fetch(form.action, {
         method: "POST",
